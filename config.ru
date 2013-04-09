@@ -1,2 +1,2 @@
 require './shock'
-run Sinatra::Application
+run Shock
