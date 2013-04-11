@@ -1,6 +1,3 @@
 class Earthquake < ActiveRecord::Base
-
-  def fetch
-    puts 'Hello'
-  end
+  validates_uniqueness_of :eqid
 end
