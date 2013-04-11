@@ -1,3 +1,6 @@
-class EarthQuake < ActiveRecord::Base
+class Earthquake < ActiveRecord::Base
 
+  def fetch
+    puts 'Hello'
+  end
 end

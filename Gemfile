@@ -9,9 +9,12 @@ gem 'foreman'
 gem 'poncho'
 
 group :development, :test do
+  # works locally only, uses heroku scheduler on prod
+  gem 'whenever', :require => false 
   gem 'sqlite3'
 end
    
 group :production do
-  gem 'pg' # this gem is required to use postgres on Heroku
+ # this gem is required to use postgres on Heroku
+ gem 'pg' 
 end
