@@ -6,14 +6,23 @@ require 'poncho'
 
 class Shock  < Sinatra::Base
   get '/' do 
-    "Hello, World!"
+    'Hello, World!'
   end
 
   class GetEarthquakeMethod < Poncho::JSONMethod
+    param :on, :type => :integer
+    param :since, :type => :integer
+    param :over
+    
+    @@select = 'eqid, source, version, datetime, latitude, longitude, magnitude, depth, nst, region'
+    
     def invoke
-      @earthquakes = Earthquake.all
+      if param(:over)
+        @earthquakes = Earthquake.select(@@select).where("magnitude > ?", param(:over)) 
+      else
+        @earthquakes = Earthquake.select(@@select).all
+      end
     end
   end
-
  get '/earthquakes.json', &GetEarthquakeMethod
 end
