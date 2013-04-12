@@ -3,7 +3,11 @@ require 'open-uri'
 
 class Import
   def fetch_csv
-    open('http://earthquake.usgs.gov/earthquakes/catalogs/eqs7day-M1.txt')
+    begin
+      open('http://earthquake.usgs.gov/earthquakes/catalogs/eqs7day-M1.txt')
+    rescue OpenURI::HTTPError => e
+      puts "Whoops got a bad status code #{e.message}"
+    end
   end
 
   def create_rows
