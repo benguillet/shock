@@ -9,8 +9,6 @@ gem 'foreman'
 gem 'poncho'
 
 group :development, :test do
-  # works locally only, uses heroku scheduler on prod
-  gem 'whenever', :require => false 
   gem 'sqlite3'
 end
    
