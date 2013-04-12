@@ -10,6 +10,7 @@ gem 'poncho'
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rack-test'
 end
    
 group :production do

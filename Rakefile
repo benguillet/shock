@@ -1,6 +1,11 @@
 # always require app file first
 require './shock'
 require 'sinatra/activerecord/rake'
+require 'rake/testtask'
+
+Rake::TestTask.new do |t|
+    t.pattern = "specs/*_spec.rb"
+end
 
 task :environment do
   require File.expand_path(File.join(*%w[ config environments ]), File.dirname(__FILE__))

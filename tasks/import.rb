@@ -2,16 +2,16 @@ require 'csv'
 require 'open-uri'
 
 class Import
-  def fetch_csv
+  def fetch_csv(url)
     begin
-      open('http://earthquake.usgs.gov/earthquakes/catalogs/eqs7day-M1.txt')
-    rescue OpenURI::HTTPError => e
+      open(url)
+    rescue OpenURI::HTTPError, Net::HTTPNotFound => e
       puts "Whoops got a bad status code #{e.message}"
     end
   end
 
   def create_rows
-    csv_text = fetch_csv
+    csv_text = fetch_csv('http://earthquake.usgs.gov/earthquakes/catalogs/eqs7day-M1.txt') 
     CSV.foreach(csv_text, :headers => true) do |row|
         begin
           Earthquake.create!(
