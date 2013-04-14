@@ -4,6 +4,9 @@ require './config/environments'
 require './models/earthquake'
 require 'poncho'
 
+Time.zone = "UTC"
+ActiveRecord::Base.default_timezone = :utc
+
 class Shock  < Sinatra::Base
   get '/' do 
     'Hello, World!'
@@ -19,6 +22,8 @@ class Shock  < Sinatra::Base
     def invoke
       if param(:over)
         @earthquakes = Earthquake.select(@@select).where("magnitude > ?", param(:over)) 
+      elsif param(:since)
+        @earthquakes = Earthquake.select(@@select).where("datetime > ?", Time.at(param(:since))) 
       else
         @earthquakes = Earthquake.select(@@select).all
       end

@@ -1,6 +1,6 @@
 configure :development, :test do
   set :database, 'sqlite3:///db/development.db'
-end
+ end
  
 configure :production do
   # Database connection
