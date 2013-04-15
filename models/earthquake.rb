@@ -5,17 +5,24 @@ class Earthquake < ActiveRecord::Base
   
 
   def self.over_magnitude(magnitude)
-    return scoped unless magnitude.present?
     where("magnitude > ?", magnitude)
   end
 
   def self.since(datetime)
-    return scoped unless datetime.present?
     where("datetime > ?",  datetime)
   end
 
-  def self.on(datetime)
-    return scoped unless datetime.present?
-    where("strftime('%Y-%m-%d', datetime) = ?", datetime)
+  def self.on(date)
+    adapter_type = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
+    case adapter_type
+    when :mysql
+      where("EXTRACT(YEAR-MONTH-DAY FROM date) = ?", date)
+    when :sqlite
+      where("strftime('%Y-%m-%d', date) = ?", date)
+    when :postgresql
+      where("EXTRACT(YEAR-MONTH-DAY FROM date) = ?", date)
+    else
+      raise NotImplementedError, "Unknown adapter type '#{adapter_type}'"
+    end
   end
 end
