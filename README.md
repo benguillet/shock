@@ -18,6 +18,9 @@ Fill the database:
 Start web server (unicorn):
     foreman start
 
+Launch specs:
+    rake spec
+
 ### Usage
     GET /earthquakes.json
     # Returns all earthquakes

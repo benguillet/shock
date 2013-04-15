@@ -13,6 +13,9 @@ gem 'geocoder'
 group :development, :test do
   gem 'sqlite3'
   gem 'rack-test'
+  gem 'rspec'
+  gem 'json_spec'
+  gem 'factory_girl'
 end
    
 group :production do
