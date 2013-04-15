@@ -16,7 +16,7 @@ class Earthquake < ActiveRecord::Base
     adapter_type = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
     case adapter_type
     when :mysql
-      where("EXTRACT(YEAR-MONTH-DAY FROM datetime) = ?", date)
+      where("DATE(datetime) = ?", date)
     when :sqlite
       where("strftime('%Y-%m-%d', datetime) = ?", date)
     when :postgresql
