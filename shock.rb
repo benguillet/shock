@@ -30,7 +30,7 @@ class Shock  < Sinatra::Base
         @earthquakes = Earthquake.select(@@select).where("datetime > ?", Time.at(param(:since))) 
       elsif param(:near)
         coords = param(:near).split(',')
-        @earthquakes = Earthquake.select(@@select).near(coords, 100)  
+        @earthquakes = Earthquake.select(@@select).near(coords, 5)  
       else
         @earthquakes = Earthquake.select(@@select).all
       end
