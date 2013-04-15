@@ -18,25 +18,11 @@ class Shock  < Sinatra::Base
     param :since, :type => :integer
     param :over
     param :near
-    @@select = 'eqid, source, version, datetime, latitude, longitude, magnitude, depth, nst, region'
     
     def invoke
-      @earthquakes = Earthquake.scoped.select(@@select)
-      
-      if params.empty?
-        @earthquakes = @earthquakes.all
-      else
-        @earthquakes = @earthquakes.over_magnitude(param(:over))    if param(:over).present? 
-        @earthquakes = @earthquakes.on(Time.at(param(:on)).to_date) if param(:on).present?
-        @earthquakes = @earthquakes.since(Time.at(param(:since)))   if param(:since).present?
-      
-        if param(:near)
-          coords = param(:near).split(',')
-          @earthquakes = @earthquakes.near(coords, 5, :select => @@select)
-        end
-      end
-      @earthquakes
+      Earthquake.by_params(params, param(:over), param(:on), param(:since), param(:near))
     end
   end
- get '/earthquakes.json', &GetEarthquakeMethod
+ 
+  get '/earthquakes.json', &GetEarthquakeMethod
 end

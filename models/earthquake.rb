@@ -25,4 +25,23 @@ class Earthquake < ActiveRecord::Base
       raise NotImplementedError, "Unknown adapter type '#{adapter_type}'"
     end
   end
+
+  def self.by_params(params, over, on, since, near)
+    select = 'eqid, source, version, datetime, latitude, longitude, magnitude, depth, nst, region'
+    earthquakes = scoped.select(select)
+    
+    if params.empty?
+      earthquakes = earthquakes.all
+    else
+      earthquakes = earthquakes.over_magnitude(over)    if over.present? 
+      earthquakes = earthquakes.on(Time.at(on).to_date) if on.present?
+      earthquakes = earthquakes.since(Time.at(since))   if since.present?
+
+      if near.present?
+        coords = near.split(',')
+        earthquakes = earthquakes.near(coords, 5, :select => select)
+      end
+    end
+    earthquakes
+  end
 end
