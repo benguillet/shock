@@ -16,11 +16,11 @@ class Earthquake < ActiveRecord::Base
     adapter_type = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
     case adapter_type
     when :mysql
-      where("EXTRACT(YEAR-MONTH-DAY FROM date) = ?", date)
+      where("EXTRACT(YEAR-MONTH-DAY FROM datetime) = ?", date)
     when :sqlite
-      where("strftime('%Y-%m-%d', date) = ?", date)
+      where("strftime('%Y-%m-%d', datetime) = ?", date)
     when :postgresql
-      where("EXTRACT(YEAR-MONTH-DAY FROM date) = ?", date)
+      where("DATE(datetime) = ?", date)
     else
       raise NotImplementedError, "Unknown adapter type '#{adapter_type}'"
     end
