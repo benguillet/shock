@@ -1,21 +1,26 @@
 Shock
 =====
-A simple JSON REST API to fetch data about earthquakes
+A simple JSON REST API to fetch data about earthquakes.
 
 ### Setup
 Get a local copy of  the repo:
+
     git clone https://github.com/benjamin-guillet/shock.git
 
 Install all the required gems:
+
     bundle install
 
 Create database:    
+
     rake db:migrate
     
 Fill the database:
+
     rake earthquake:import
 
 Start web server (unicorn):
+
     foreman start
 
 ### Usage
