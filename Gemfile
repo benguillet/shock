@@ -7,6 +7,8 @@ gem 'sinatra-activerecord'
 gem 'unicorn'
 gem 'foreman'
 gem 'poncho'
+gem 'json'
+gem 'geocoder'
 
 group :development, :test do
   gem 'sqlite3'
