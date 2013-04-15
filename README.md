@@ -24,6 +24,7 @@ Start web server (unicorn):
     foreman start
 
 Launch specs:
+    
     rake spec
 
 ### Usage
