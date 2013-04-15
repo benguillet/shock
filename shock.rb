@@ -10,7 +10,7 @@ ActiveRecord::Base.default_timezone = :utc
 
 class Shock  < Sinatra::Base
   get '/' do 
-    'Hello, World!'
+    'Welcome to the ShockAPI!'
   end
 
   class GetEarthquakeMethod < Poncho::JSONMethod
@@ -18,22 +18,24 @@ class Shock  < Sinatra::Base
     param :since, :type => :integer
     param :over
     param :near
-    # ADD INDEX ON DATETIME? AND LONTITUDE, LAT? 
     @@select = 'eqid, source, version, datetime, latitude, longitude, magnitude, depth, nst, region'
     
     def invoke
-      if param(:over)
-        @earthquakes = Earthquake.select(@@select).where("magnitude > ?", param(:over)) 
-      elsif param(:on)
-        @earthquakes = Earthquake.select(@@select).where("strftime('%Y-%m-%d', datetime) = ?", Time.at(param(:on)).to_date)
-      elsif param(:since)
-        @earthquakes = Earthquake.select(@@select).where("datetime > ?", Time.at(param(:since))) 
-      elsif param(:near)
-        coords = param(:near).split(',')
-        @earthquakes = Earthquake.select(@@select).near(coords, 5)  
+      @earthquakes = Earthquake.scoped.select(@@select)
+      
+      if params.empty?
+        @earthquakes = @earthquakes.all
       else
-        @earthquakes = Earthquake.select(@@select).all
+        @earthquakes = @earthquakes.over_magnitude(param(:over))    if param(:over).present? 
+        @earthquakes = @earthquakes.on(Time.at(param(:on)).to_date) if param(:on).present?
+        @earthquakes = @earthquakes.since(Time.at(param(:since)))   if param(:since).present?
+      
+        if param(:near)
+          coords = param(:near).split(',')
+          @earthquakes = @earthquakes.near(coords, 5, :select => @@select)
+        end
       end
+      @earthquakes
     end
   end
  get '/earthquakes.json', &GetEarthquakeMethod
