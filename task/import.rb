@@ -2,7 +2,7 @@ require 'csv'
 require 'open-uri'
 
 class Import
-  def fetch_csv(url)
+  def self.fetch_csv(url)
     begin
       open(url)
     rescue OpenURI::HTTPError, Net::HTTPNotFound => e
@@ -10,7 +10,7 @@ class Import
     end
   end
 
-  def create_rows
+  def self.create_rows
     csv_text = fetch_csv('http://earthquake.usgs.gov/earthquakes/catalogs/eqs7day-M1.txt') 
     CSV.foreach(csv_text, :headers => true) do |row|
         begin

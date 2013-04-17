@@ -16,7 +16,6 @@ end
 
 namespace :earthquake do
   task :import => :tasks do
-    import = Import.new
-    import.create_rows
+    Import.create_rows
   end
 end
