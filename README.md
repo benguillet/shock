@@ -1,5 +1,8 @@
 Shock
 =====
+[![Build Status](https://travis-ci.org/benjamin-guillet/shock.png)](https://travis-ci.org/benjamin-guillet/shock)
+
+
 A simple JSON REST API to fetch data about earthquakes.
 
 ### Setup
