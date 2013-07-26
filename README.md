@@ -1,7 +1,7 @@
 Shock
 =====
 [![Build Status](https://travis-ci.org/benjamin-guillet/shock.png)](https://travis-ci.org/benjamin-guillet/shock)
-
+[![Code Climate](https://codeclimate.com/repos/51f2920c89af7e6c1a04c8b2/badges/83ef561e56458e5d4c36/gpa.png)](https://codeclimate.com/repos/51f2920c89af7e6c1a04c8b2/feed)
 
 A simple JSON REST API to fetch data about earthquakes.
 
